@@ -1,3 +1,6 @@
+# useful shortcuts
+1. tsrafce : to create a react arrow function component with default export
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
