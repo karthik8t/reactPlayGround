@@ -2,22 +2,24 @@ import {Card, CardContent, CardFooter, CardHeader} from "@/components/ui/card.ts
 import {Input} from "@/components/ui/input.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {cn} from "@/lib/utils.ts";
+import {useState} from "react";
 
-
-let ingredients : string[] = ["Onions", "Tomatoes", "Eggs"]
-
-const submitIngredient = (event: Event) => {
-    event.preventDefault();
-    const formData : FormData = new FormData(event.currentTarget);
-    let ingredient : string = formData.get("ingredient");
-    ingredients.push(ingredient);
-    console.log(ingredients)
-}
 
 type Props = {};
 export default function Ingredients({}: Props) {
+
+    const [ingredients, setIngredients] = useState(["Onions", "Tomatoes", "Eggs"])
+
+
+    const submitIngredient = (event: Event) => {
+        event.preventDefault();
+        const formData : FormData = new FormData(event.currentTarget);
+        setIngredients((prevState) => [...prevState , formData.get("ingredient")])
+    }
+
+
     return (
-        <Card className={cn("w-7/12 h-5/6 my-auto bg-[#FBFBFB] flex flex-col items-center max-w-[75rem]")}>
+        <Card className={cn("w-7/12 h-4/6 my-auto bg-[#FBFBFB] flex flex-col items-center max-w-[75rem]")}>
             <CardHeader className={"w-full"}>
                 <form className={"flex justify-center mt-12"} onSubmit={submitIngredient}>
                     <Input type={"text"} placeholder={"ingredient"} enterKeyHint={"enter"} className={"w-1/2"} name={"ingredient"}/>
@@ -26,7 +28,7 @@ export default function Ingredients({}: Props) {
             </CardHeader>
             <CardContent className={"w-3/4 mx-auto mt-16 p-0"}>
                 <h1 className={"text-4xl"}>Ingredients in hand: </h1>
-                <ul className={"text-2xl list-disc mt-4 ml-12"}>
+                <ul className={"text-2xl overflow-auto mt-4 ml-12 max-h-96 list-disc list-inside"}>
                     {ingredients.map((ingredient, index) => (<li key={index}>{ingredient}</li>) )}
                 </ul>
             </CardContent>
