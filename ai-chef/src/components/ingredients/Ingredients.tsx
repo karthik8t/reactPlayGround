@@ -20,6 +20,12 @@ export default function Ingredients({}: Props) {
         }
     }
 
+    // this is not working since i'm  not in react 19 version
+    // function newSubmitIngredient(formData : FormData) {
+    //     let ingredient = formData.get("ingredient");
+    //     setIngredients(prevState => [...prevState, ingredient])
+    // }
+
     return (
         <Card className={cn(
             "w-7/12 h-4/6 my-auto",
