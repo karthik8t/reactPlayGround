@@ -20,7 +20,7 @@ interface IngredientsProps {
 }
 
 export default function Ingredients({onSubmitIngredients}: IngredientsProps) {
-    const [ingredients, setIngredients] = useState<string[]>(["egg", "oil","salt", "onions", "chicken"]);
+    const [ingredients, setIngredients] = useState<string[]>([]);
 
     const constructPrompt = (ingredientsList : string[]) => {
         return `
@@ -36,7 +36,6 @@ export default function Ingredients({onSubmitIngredients}: IngredientsProps) {
         const model = "codegeex4"; // Assuming the model is 'llama3.2', as indicated in the curl example
 
         const prompt = constructPrompt(ingredientsList);
-        console.log(prompt)
 
         try {
             // Make the API call to Ollama
@@ -56,7 +55,6 @@ export default function Ingredients({onSubmitIngredients}: IngredientsProps) {
                         const parsedData = JSON.parse(data);
                         const recipe = parsedData.response;
                         const formattedRecipe = recipe.replace("```html", "").replace("```","");
-                        console.log(formattedRecipe)
                         onSubmitIngredients?.(formattedRecipe)
                         setIngredients([])
                     } catch (error) {
