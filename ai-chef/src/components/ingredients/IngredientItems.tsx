@@ -4,7 +4,7 @@ type Props = {
 
 export default function IngredientItems({ ingredients }: Props) {
     return (
-        <div className="space-y-4">
+        <div className="space-y-4 ingredientItem">
             <h1 className="text-3xl font-semibold text-gray-800 dark:text-gray-100">
                 Ingredients in hand:
             </h1>
