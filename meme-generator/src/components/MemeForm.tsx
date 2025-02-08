@@ -9,10 +9,11 @@ import {memeSchema} from "@/types/types";
 
 interface MemeFormProps {
     onGenerate?: (data: z.infer<typeof memeSchema>) => void,
-    defaultValues?: { footer: string; header: string }
+    defaultValues?: { footer: string; header: string },
+    onRefresh?: () => void
 }
 
-export default function MemeForm({onGenerate, defaultValues}: MemeFormProps) {
+export default function MemeForm({onGenerate, defaultValues, onRefresh}: MemeFormProps) {
 
     const form = useForm({
         resolver: zodResolver(memeSchema),
@@ -30,34 +31,26 @@ export default function MemeForm({onGenerate, defaultValues}: MemeFormProps) {
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-                <FormField control={form.control} name={"header"} render={({field}) => (
-                    <FormItem>
-                        <FormLabel>Meme Header</FormLabel>
-                        <FormControl>
-                            <Input placeholder="shadcn" {...field} />
-                        </FormControl>
-                        <FormDescription>
-                            This is placed at the top of Meme
-                        </FormDescription>
-                        <FormMessage/>
-                    </FormItem>
-                )}>
-                </FormField>
-
-                <FormField control={form.control} name={"footer"} render={({field}) => (
-                    <FormItem>
-                        <FormLabel>Meme Footer</FormLabel>
-                        <FormControl>
-                            <Input placeholder="shadcn" {...field} />
-                        </FormControl>
-                        <FormDescription>
-                            This is placed at the bottom of Meme
-                        </FormDescription>
-                        <FormMessage/>
-                    </FormItem>
-                )}>
-                </FormField>
+                {[
+                    {name: "header", label: "Meme Header", description: "This is placed at the top of Meme"},
+                    {name: "footer", label: "Meme Footer", description: "This is placed at the bottom of Meme"}
+                ].map((item, index) =>
+                    <FormField control={form.control} name={item.name} key={index} render={({field}) => (
+                        <FormItem>
+                            <FormLabel>{item.label}</FormLabel>
+                            <FormControl>
+                                <Input placeholder="shadcn" {...field} />
+                            </FormControl>
+                            <FormDescription>
+                                {item.description}
+                            </FormDescription>
+                            <FormMessage/>
+                        </FormItem>
+                    )}>
+                    </FormField>
+                )}
                 <Button type="submit" className={"mt-4"}>Submit</Button>
+                <Button type="button" className={"mt-4 bg-secondary text-foreground ml-4"} onClick={onRefresh}>Refresh</Button>
             </form>
         </Form>
     );

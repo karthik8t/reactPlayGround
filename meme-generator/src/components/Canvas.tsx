@@ -14,12 +14,11 @@ type Props = {
 };
 
 
-
 export default function Canvas({width, height, header, footer, src}: Props) {
     const canvasRef = useRef(null);
 
     useEffect(() => {
-        let img = new Image();
+        const img = new Image();
         img.src = src;
         img.width = width
         img.height = height
@@ -30,10 +29,34 @@ export default function Canvas({width, height, header, footer, src}: Props) {
             context.font = `28px ${memeFont.style.fontFamily}`;
             context.textBaseline = 'middle';
             context.textAlign = 'center';
-            context.fillText(header, width/2 , height*(0.1));
-            context.fillText(footer, width/2 , height*(0.9));
+            addTextToCanvas(header, width / 2, height*(0.1));
+            addTextToCanvas(footer, width / 2, height*(0.85));
+
+            function addTextToCanvas(text:string, x:number, y:number) {
+                const words = text.split(" ");
+                const completeLines = [];
+                let completeLine = "";
+                let lineLenght = 0;
+                for (let i = 0; i < words.length; i++) {
+                    const currentWord = words[i];
+                    const currentWordTextLength = context.measureText(' ' + currentWord);
+                    if (lineLenght + currentWordTextLength.width > width) {
+                        completeLines.push(completeLine);
+                        completeLine = "";
+                        lineLenght = 0;
+                    }
+                    completeLine += " ";
+                    completeLine += currentWord;
+                    lineLenght += currentWordTextLength.width;
+                }
+                completeLines.push(completeLine);
+                for (const line of completeLines) {
+                    context.fillText(line, x, y);
+                    y += 20;
+                }
+            }
         }
-    }, [header, footer]);
+    }, [header, footer, src]);
 
     return (
         <canvas ref={canvasRef} width={width} height={height}/>
