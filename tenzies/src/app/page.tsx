@@ -13,7 +13,7 @@ export default function Home() {
       </div>
           <div>
               <div>
-                  <Button size={"image"} className={""}></Button>
+
               </div>
 
           </div>
