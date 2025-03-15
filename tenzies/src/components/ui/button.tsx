@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react"
 import {Slot} from "@radix-ui/react-slot"
 import {cva, type VariantProps} from "class-variance-authority"
@@ -8,7 +10,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
+        default: "bg-primary text-primary-foreground hover:bg-primary/60",
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline:
@@ -17,24 +19,30 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+          lockup: "bg-[#88F8E5] rounded-none w-[234] text-secondary-foreground border-2"
       },
       size: {
         default: "h-10 px-4 py-2",
         sm: "h-9 rounded-md px-3",
         lg: "h-11 rounded-md px-8",
         icon: "h-10 w-10",
-          agent:"h-[100] w-[100] bg-secondary"
+          agent:"h-[100] w-[100] bg-[#09384310] border-2 rounded-none",
+          attack: "w-[300] h-[600] bg-0 hover"
       },
+        tile: {
+          default: "border-secondary", locked:"border-primary"
+        }
     },
     defaultVariants: {
       variant: "default",
       size: "default",
+        tile: "default"
     },
   }
 )
 
-interface Agent {
-    agent: 'omen'| 'sage' | 'jett'
+export interface Agent {
+    agent: 'astra' | 'breach' | 'brim' | 'jett' | 'phoenix' | 'sage' | 'sova'
 }
 interface AgentRef {
     agent?: never
@@ -49,12 +57,12 @@ export interface ButtonProps
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps & ButtonIconProps>(
-  ({ className, variant, size, asChild = false, agent: agent = 'sage', ...props }, ref) => {
+  ({ className, variant, size, asChild = false, agent: agent = 'sage', tile, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
-      let style = {backgroundImage: size === 'agent'?`url('/agents/${agent}/avatar.png')`:"", backgroundSize:"cover"};
+      const style = {backgroundImage: size === 'agent'?`url('/agents/${agent}/avatar.png')`:"", backgroundSize:"cover"};
       return (
       <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
+        className={cn(buttonVariants({ variant, size, className, tile }))}
         ref={ref}
         style={style}
         {...props}
