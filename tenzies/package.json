@@ -4,7 +4,7 @@
   "homepage": "https://karthik8t.github.io/reactPlayGround/tenzies",
   "private": true,
   "scripts": {
-    "predeploy": "npm run build",
+    "predeploy": "next build",
     "deploy": "gh-pages -d out",
     "dev": "next dev --turbopack",
     "build": "next build",
