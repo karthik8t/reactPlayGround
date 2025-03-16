@@ -1,7 +1,7 @@
 {
   "name": "tenzies",
   "version": "0.1.0",
-  "homepage": "https://karthik8t.github.io/reactPlayGround/tenzies",
+  "homepage": "https://karthik8t.github.io/reactPlayGround",
   "private": true,
   "scripts": {
     "predeploy": "next build",
